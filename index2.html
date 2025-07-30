@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBI Center - Innovation & Entrepreneurship Services</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">TBI Center<p>Caraga State University</p></a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                
+            </ul>
+            <div class="auth-buttons">
+                
+                <button onclick="window.location.href='home.html'" class="signup-btn">Log out</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-fade-in">Innovation & Entrepreneurship Services</h1>
+                <p class="animate-fade-in">Transform your ideas into successful startups with our comprehensive support, mentorship, and resources at Caraga State University's TBI Center.</p>
+                <a href="#services" class="cta-button animate-fade-in">Explore Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <!-- 1. Incubation Program -->
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Incubation Program</h3>
+                    <p>Comprehensive support for early-stage startups with mentorship, resources, and funding opportunities.</p>
+                    <button class="service-btn" onclick="openIncubationModal()">Learn More</button>
+                </div>
+
+                <!-- 2. Professional Retainer Services -->
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Professional Retainer Services</h3>
+                    <p>Connect with experienced mentors and advisors for ongoing professional guidance.</p>
+                    <button class="service-btn" onclick="openRetainerModal()">Get Started</button>
+                </div>
+
+                <!-- 3. Business Training Programs -->
+                <div class="service-card">
+                    <div class="service-icon">📚</div>
+                    <h3>Business Training Programs</h3>
+                    <p>Comprehensive training programs to enhance your entrepreneurial skills and knowledge.</p>
+                    <button class="service-btn" onclick="openTrainingModal()">View Programs</button>
+                </div>
+
+                <!-- 4. Consultation Services -->
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Consultation Services</h3>
+                    <p>Expert consultation on various aspects of business development and strategy.</p>
+                    <button class="service-btn" onclick="openConsultationModal()">Get Consultation</button>
+                </div>
+
+                <!-- 5. Facility Services -->
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Facility Services</h3>
+                    <p>Modern workspaces and meeting facilities to support your business operations.</p>
+                    <button class="service-btn" onclick="openFacilityModal()">Book Facility</button>
+                </div>
+
+                <!-- 6. Networking Events -->
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Networking Events</h3>
+                    <p>Connect with fellow entrepreneurs, investors, and industry experts at our events.</p>
+                    <button class="service-btn" onclick="openNetworkingModal()">View Events</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div id="loginForm">
+                <h2>Welcome Back</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Sign in to your account</p>
+                <form onsubmit="handleLogin(event)">
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email:</label>
+                        <input type="email" required placeholder="user@example.com" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password:</label>
+                        <input type="password" required placeholder="password" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; margin-top: 1rem; cursor: pointer;">
+                        Sign In
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <p style="color: #666;">Don't have an account?</p>
+                    <a href="#" onclick="switchToSignup()" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign up here</a>
+                </div>
+            </div>
+            <div id="signupForm" style="display: none;">
+                <h2>Create Account</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Join our community</p>
+                <form onsubmit="handleSignup(event)">
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Full Name:</label>
+                        <input type="text" required placeholder="John Doe" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email:</label>
+                        <input type="email" required placeholder="john@example.com" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password:</label>
+                        <input type="password" required placeholder="password" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; margin-top: 1rem; cursor: pointer;">
+                        Create Account
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <p style="color: #666;">Already have an account?</p>
+                    <a href="#" onclick="switchToLogin()" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Modals -->
+
+     <!-- 1. Incubation Program Modal -->
+    <div id="incubationModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('incubationModal')">&times;</span>
+            <div id="incubationForm">
+                <h2>Incubation Program Application</h2>
+                <form onsubmit="submitIncubationForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" required name="fullName">
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" required name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" required name="mobile">
+                    </div>
+                    <div class="form-group">
+                        <label>Startup Information *</label>
+                        <textarea required name="startupInfo" rows="4" placeholder="Tell us about your startup idea, current stage, and goals..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </form>
+            </div>
+            <div id="incubationPayment" style="display: none;">
+                <h2>Payment Information</h2>
+                <div class="payment-info-enhanced">
+                    <h3>Incubation Program Fee: $2,500</h3>
+                    <p>This includes 6 months of mentorship, workspace access, and funding opportunities.</p>
+                </div>
+
+                <!-- Enhanced Payment System -->
+                <div class="enhanced-payment-container">
+                    <!-- Payment Method Selection -->
+                    <div class="payment-method-selection" id="paymentMethodSelection">
+                        <h4>Choose Payment Method</h4>
+                        <div class="payment-methods-grid">
+                            <button class="payment-method-card" onclick="selectPaymentMethod('card')" data-testid="button-card-payment">
+                                <div class="payment-icon-wrapper">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <span>Card Payment</span>
+                            </button>
+                            <button class="payment-method-card" onclick="selectPaymentMethod('ewallet')" data-testid="button-ewallet-payment">
+                                <div class="payment-icon-wrapper">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>E-Wallet</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card Payment Form -->
+                    <div class="payment-form-section" id="cardPaymentForm" style="display: none;">
+                        <div class="form-header">
+                            <button class="back-btn" onclick="goBackToPaymentSelection()">← Back</button>
+                            <h4>Card Payment Details</h4>
+                        </div>
+
+                        <form onsubmit="processCardPayment(event, 'incubation', 2500)">
+                            <div class="card-form-container">
+                                <div class="form-group">
+                                    <label>Card Number *</label>
+                                    <input type="text" id="incubationCardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" data-testid="input-card-number">
+                                    <div class="validation-message" id="incubationCardValidation"></div>
+                                    <div class="card-brands">
+                                        <div class="brand-icon" data-brand="visa">VISA</div>
+                                        <div class="brand-icon" data-brand="mastercard">MASTER</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Expiry Date *</label>
+                                        <input type="text" id="incubationExpiryDate" class="card-input" placeholder="MM/YY" maxlength="5" data-testid="input-expiry-date">
+                                        <div class="validation-message" id="incubationExpiryValidation"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CVV *</label>
+                                        <input type="text" id="incubationCvv" class="card-input" placeholder="123" maxlength="4" data-testid="input-cvv">
+                                        <div class="validation-message" id="incubationCvvValidation"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Cardholder Name *</label>
+                                    <input type="text" id="incubationCardholderName" class="card-input" placeholder="Full name on card" data-testid="input-cardholder-name">
+                                    <div class="validation-message" id="incubationNameValidation"></div>
+                                </div>
+
+                                <button type="submit" class="enhanced-pay-button" data-testid="button-pay-card">
+                                    <span>Pay $2,500.00</span>
+                                    <div class="loading-spinner" style="display: none;"></div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- E-Wallet Selection -->
+                    <div class="payment-form-section" id="ewalletSelection" style="display: none;">
+                        <div class="form-header">
+                            <button class="back-btn" onclick="goBackToPaymentSelection()">← Back</button>
+                            <h4>Choose E-Wallet Provider</h4>
+                        </div>
+
+                        <div class="ewallet-options-enhanced">
+                            <div class="ewallet-card" onclick="selectEWallet('gcash')" data-testid="button-gcash">
+                                <div class="ewallet-content">
+                                    <div class="ewallet-icon-enhanced gcash">G</div>
+                                    <div class="ewallet-info">
+                                        <h5>GCash</h5>
+                                        <p>Philippines Digital Wallet</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+
+                            <div class="ewallet-card" onclick="selectEWallet('maya')" data-testid="button-maya">
+                                <div class="ewallet-content">
+                                    <div class="ewallet-icon-enhanced maya">M</div>
+                                    <div class="ewallet-info">
+                                        <h5>Maya</h5>
+                                        <p>Digital Payment Solution</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+
+                            <div class="ewallet-card" onclick="selectEWallet('paypal')" data-testid="button-paypal">
+                                <div class="ewallet-content">
+                                    <div class="ewallet-icon-enhanced paypal">P</div>
+                                    <div class="ewallet-info">
+                                        <h5>PayPal</h5>
+                                        <p>Global Payment Platform</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Payment Sections -->
+                    <div class="payment-form-section" id="qrPaymentSection" style="display: none;">
+                        <div class="form-header">
+                            <button class="back-btn" onclick="goBackToEWalletSelection()">← Back</button>
+                            <h4 id="qrPaymentTitle">Pay with E-Wallet</h4>
+                        </div>
+
+                        <div class="qr-payment-container">
+                            <div class="qr-code-wrapper">
+                                <div class="qr-code-container" id="qrCodeContainer">
+                                    <img id="qrCodeImage" src="" alt="QR Code" class="qr-code-image">
+                                    <div id="qrCodeError" class="qr-error" style="display: none;">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <p>QR Code unavailable</p>
+                                        <small>Please try another payment method</small>
+                                    </div>
+                                </div>
+                                <div class="payment-amount-display">
+                                    <h3>Amount: $2,500.00</h3>
+                                </div>
+                                <div class="payment-instructions" id="paymentInstructions">
+                                    Scan the QR code with your e-wallet app to complete payment
+                                </div>
+                            </div>
+
+                            <button class="enhanced-pay-button" id="completeEWalletPayment" onclick="completeEWalletPayment('incubation', 2500)" data-testid="button-complete-ewallet">
+                                <span>Complete Payment</span>
+                                <div class="loading-spinner" style="display: none;"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-buttons" style="margin-top: 2rem;">
+                    <button type="button" onclick="goBackToIncubationForm()" class="back-btn">← Back to Form</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Professional Retainer Services Modal -->
+    <div id="retainerModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('retainerModal')">&times;</span>
+            <div id="retainerForm">
+                <h2>Professional Retainer Services</h2>
+                <form onsubmit="submitRetainerForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" required name="fullName">
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" required name="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number *</label>
+                        <input type="tel" required name="mobile">
+                    </div>
+                    <div class="form-group">
+                        <label>Service Requirements *</label>
+                        <textarea required name="serviceInfo" rows="4" placeholder="Describe your professional service needs and requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Continue to Payment</button>
+                </form>
+            </div>
+            <div id="retainerPayment" style="display: none;">
+                <!-- Same enhanced payment system structure as incubation modal but with $150 amount -->
+                <!-- Copy the enhanced payment container from above and modify amounts -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Business Training Programs Modal -->
+    <div id="trainingModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('trainingModal')">&times;</span>
+            <div id="trainingPrograms">
+                <h2>Business Training Programs</h2>
+                <div class="training-options">
+                    <div class="training-option" onclick="selectTraining('face-to-face')">
+                        <h3>Face-to-Face Entrepreneurial Training</h3>
+                        <p>Interactive in-person training sessions with hands-on activities.</p>
+                        <span class="price">$200 per participant</span>
+                        <button class="option-btn">Register Now</button>
+                    </div>
+                    <div class="training-option" onclick="selectTraining('online')">
+                        <h3>Online Entrepreneurial Training</h3>
+                        <p>Flexible online training with live sessions and recorded materials.</p>
+                        <span class="price">$150 per participant</span>
+                        <button class="option-btn">Join Online</button>
+                    </div>
+                    <div class="training-option" onclick="selectTraining('ip-support')">
+                        <h3>Intellectual Property Support</h3>
+                        <p>Legal guidance and support for patents, trademarks, and IP protection.</p>
+                        <span class="price">$500 consultation fee</span>
+                        <button class="option-btn">Protect Your IP</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Training Registration Forms will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <!-- 4. Consultation Services Modal -->
+    <div id="consultationModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('consultationModal')">&times;</span>
+            <div id="consultationServices">
+                <h2>Consultation Services</h2>
+                <div class="consultation-grid">
+                    <div class="consultation-option" onclick="selectConsultation('market-validation')">
+                        <h3>Market Validation</h3>
+                        <p>Validate your business idea with market research and analysis.</p>
+                        <button class="option-btn">Get Quote</button>
+                    </div>
+                    <div class="consultation-option" onclick="selectConsultation('business-model')">
+                        <h3>Business Model Development</h3>
+                        <p>Develop and refine your business model for success.</p>
+                        <button class="option-btn">Start Planning</button>
+                    </div>
+                    <div class="consultation-option" onclick="selectConsultation('mentorship')">
+                        <h3>Mentorship & Coaching</h3>
+                        <p>Get paired with experienced mentors for ongoing guidance.</p>
+                        <button class="option-btn">Find Mentor</button>
+                    </div>
+                    <div class="consultation-option" onclick="selectConsultation('business-plan')">
+                        <h3>Business Plan Writing</h3>
+                        <p>Professional business plan development and review.</p>
+                        <button class="option-btn">Write Plan</button>
+                    </div>
+                    <div class="consultation-option" onclick="selectConsultation('feasibility')">
+                        <h3>Feasibility Study</h3>
+                        <p>Comprehensive feasibility analysis for your business idea.</p>
+                        <button class="option-btn">Analyze Now</button>
+                    </div>
+                    <div class="consultation-option" onclick="selectConsultation('product-development')">
+                        <h3>Product Development & Sensory Evaluation</h3>
+                        <p>Product development support and sensory testing services.</p>
+                        <button class="option-btn">Develop Product</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Consultation forms will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <!-- 5. Facility Services Modal -->
+    <div id="facilityModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('facilityModal')">&times;</span>
+            <div id="facilityServices">
+                <h2>Facility Services</h2>
+                <div class="facility-grid">
+                    <div class="facility-option" onclick="selectFacility('hot-desk')">
+                        <h3>Hot Desk</h3>
+                        <p>Flexible workspace with shared amenities.</p>
+                        <span class="price">$25 per person/day</span>
+                        <button class="option-btn">Book Now</button>
+                    </div>
+                    <div class="facility-option" onclick="selectFacility('dedicated-desk')">
+                        <h3>Dedicated Desk</h3>
+                        <p>Your own permanent desk in a shared workspace.</p>
+                        <span class="price">$150 per person/month</span>
+                        <button class="option-btn">Reserve Desk</button>
+                    </div>
+                    <div class="facility-option" onclick="selectFacility('meeting-room')">
+                        <h3>Meeting Room</h3>
+                        <p>Private meeting rooms for presentations and conferences.</p>
+                        <span class="price">$50 per hour (up to 10 people)</span>
+                        <button class="option-btn">Book Room</button>
+                    </div>
+                    <div class="facility-option" onclick="selectFacility('event-space')">
+                        <h3>Event Space Rental</h3>
+                        <p>Large event space for workshops, seminars, and conferences.</p>
+                        <span class="price">$200 per day (up to 100 people)</span>
+                        <button class="option-btn">Reserve Space</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Facility booking forms will be inserted here dynamically -->
+        </div>
+    </div>
+
+    <!-- 6. Networking Events Modal -->
+    <div id="networkingModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close" onclick="closeModal('networkingModal')">&times;</span>
+            <div id="networkingEvents">
+                <h2>Networking Events</h2>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button onclick="changeMonth(-1)" class="nav-btn">&lt;</button>
+                        <h3 id="currentMonth"></h3>
+                        <button onclick="changeMonth(1)" class="nav-btn">&gt;</button>
+                    </div>
+                    <div class="calendar" id="calendar"></div>
+                </div>
+                <div id="eventDetails" class="event-details" style="display: none;">
+                    <h3>Event Details</h3>
+                    <div id="eventInfo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-modal">
+            <div class="success-content">
+                <div class="success-icon">✓</div>
+                <h2 id="successTitle">Payment Successful!</h2>
+                <p id="successMessage">Your payment has been processed successfully.</p>
+                <button onclick="closeModal('successModal')" class="success-btn">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About TBI Center</h2>
+                    <p>The Technology Business Incubator (TBI) Center at Caraga State University is dedicated to fostering innovation and entrepreneurship in the region. We provide comprehensive support to aspiring entrepreneurs and startups through our state-of-the-art facilities and expert guidance.</p>
+                    <p>Our mission is to transform innovative ideas into successful businesses that contribute to regional economic development and create sustainable employment opportunities.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Startups Supported</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Expert Mentors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Entrepreneurs collaborating">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Caraga State University, Butuan City</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+63 85 341 3988</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>tbi@carsu.edu.ph</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TBI Center - Caraga State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script2.js"></script>
+</body>
+</html>
