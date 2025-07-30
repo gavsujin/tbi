@@ -328,7 +328,7 @@ function handleLogin(event) {
                 isAdmin = true;
                 currentUser = { email: email, name: 'Admin User', role: 'admin' };
                 closeAuthModal();
-                window.location.href = 'indexhtml';
+                window.location.href = 'index.html';
                 showSuccessMessage('Welcome to the admin dashboard!');
 
                  // Smooth page transition to index.html
