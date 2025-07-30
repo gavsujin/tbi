@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBI Center - Innovation & Entrepreneurship Services</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">TBI Center</a>
+            <ul class="nav-menu">
+              
+
+               <li><a href="#" onclick="openAuthModal('login')">Log In</a></li>
+                <li><a href="#" onclick="openAuthModal('signup')" class="signup-btn">Sign Up</a></li>
+
+                
+            
+            </ul>
+        </nav>
+    </header>
+
+    
+
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-fade-in">Innovation & Entrepreneurship Services</h1>
+                <p class="animate-fade-in">Empowering startups and entrepreneurs in the Caraga Region with comprehensive business solutions</p>
+                <a href="#" class="cta-button animate-fade-in" onclick="handleExploreClick()">Explore Our Services</a>
+
+            </div>
+        </div>
+    </section>
+
+
+     <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div id="loginForm">
+                <h2>Welcome Back</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Sign in to your account</p>
+                <form onsubmit="handleLogin(event)">
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email:</label>
+                        <input type="email" required placeholder="user@navigatu.com" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password:</label>
+                        <input type="password" required placeholder="user123" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" style="transform: scale(1.2);">
+                            <span>Remember me</span>
+                        </label>
+                        <a href="#" style="color: #667eea; text-decoration: none;">Forgot password?</a>
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; margin-top: 1rem; cursor: pointer;">
+                        Sign In
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e1e5e9;">
+                    <p>Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign up</a></p>
+                </div>
+            </div>
+        
+     
+            
+            <div id="signupForm" style="display: none;">
+                <h2>Create Account</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Join NAVIGATU today</p>
+                <form onsubmit="handleSignup(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">First Name:</label>
+                            <input type="text" required placeholder="John" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Last Name:</label>
+                            <input type="text" required placeholder="Doe" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email:</label>
+                        <input type="email" required placeholder="your@email.com" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password:</label>
+                        <input type="password" required placeholder="••••••••" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Confirm Password:</label>
+                        <input type="password" required placeholder="••••••••" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" required style="transform: scale(1.2);">
+                            <span>I agree to the <a href="#" style="color: #667eea;">Terms of Service</a> and <a href="#" style="color: #667eea;">Privacy Policy</a></span>
+                        </label>
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(45deg, #ff6b6b, #ff8e8e); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; margin-top: 0.5rem; cursor: pointer;">
+                        Create Account
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e1e5e9;">
+                    <p>Already have an account? <a href="#" onclick="switchToLogin()" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign in</a></p>
+                </div>
+            </div>
+           
+            
+
+
+            <div id="adminForm" >
+                <h2>🔐 Admin Login</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Access administrative dashboard</p>
+                <form onsubmit="handleAdminLogin(event)">
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Admin Email:</label>
+                        <input type="email" required placeholder="admin@navigatu.com" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Admin Password:</label>
+                        <input type="password" required placeholder="••••••••" style="width: 100%; padding: 0.75rem; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-size: 0.9rem;">
+                        <strong>Demo Credentials:</strong><br>
+                        Email: admin@navigatu.com<br>
+                        Password: admin123
+                    </div>
+                    <button type="submit" style="width: 100%; background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; margin-top: 1rem; cursor: pointer;">
+                        Access Dashboard
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e1e5e9;">
+                    <p>Regular user? <a href="#" onclick="switchToLogin()" style="color: #667eea; text-decoration: none; font-weight: 600;">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+            <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <div class="admin-header">
+            <div class="admin-nav">
+                <div class="admin-title">NAVIGATU Admin Dashboard</div>
+                <div class="admin-user">
+                    <span>👨‍💼 Admin User</span>
+                    <button onclick="logoutAdmin()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">Logout</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-content">
+            <!-- Stats Overview -->
+            <div class="admin-stats">
+                <div class="stat-card users">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-card orders">
+                    <div class="stat-number">456</div>
+                    <div class="stat-label">Active Orders</div>
+                </div>
+                <div class="stat-card revenue">
+                    <div class="stat-number">$89,230</div>
+                    <div class="stat-label">Monthly Revenue</div>
+                </div>
+                <div class="stat-card services">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Active Services</div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="admin-section">
+                <h3>Recent Orders</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD-001</td>
+                            <td>John Smith</td>
+                            <td>Web Development</td>
+                            <td>$799</td>
+                            <td><span class="status-badge status-active">In Progress</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-002</td>
+                            <td>Sarah Johnson</td>
+                            <td>Design & Branding</td>
+                            <td>$299</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-003</td>
+                            <td>Mike Wilson</td>
+                            <td>Mobile Apps</td>
+                            <td>$1,299</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-004</td>
+                            <td>Emma Davis</td>
+                            <td>Digital Marketing</td>
+                            <td>$499</td>
+                            <td><span class="status-badge status-active">In Progress</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- User Management -->
+            <div class="admin-section">
+                <h3>User Management</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#USR-001</td>
+                            <td>John Smith</td>
+                            <td>john@email.com</td>
+                            <td>2025-05-15</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#USR-002</td>
+                            <td>Sarah Johnson</td>
+                            <td>sarah@email.com</td>
+                            <td>2025-05-20</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#USR-003</td>
+                            <td>Mike Wilson</td>
+                            <td>mike@email.com</td>
+                            <td>2025-06-01</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Service Management -->
+            <div class="admin-section">
+                <h3>Service Management</h3>
+                <div style="margin-bottom: 1rem;">
+                    <button onclick="addNewService()" style="background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        + Add New Service
+                    </button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Service Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Orders</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Web Development</td>
+                            <td>Development</td>
+                            <td>$799</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>45</td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Apps</td>
+                            <td>Development</td>
+                            <td>$1,299</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>23</td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Design & Branding</td>
+                            <td>Design</td>
+                            <td>$299</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>67</td>
+                            <td>
+                                <div class="admin-btn-group">
+                                    <button class="admin-btn edit">Edit</button>
+                                    <button class="admin-btn delete">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+            <div id="page-transition" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+"></div>
+
+    
+    <script src="script.js"></script>
+    </body>
+</html>
