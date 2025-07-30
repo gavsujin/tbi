@@ -328,7 +328,7 @@ function handleLogin(event) {
                 isAdmin = true;
                 currentUser = { email: email, name: 'Admin User', role: 'admin' };
                 closeAuthModal();
-                window.location.href = 'index2.html';
+                window.location.href = 'indexhtml';
                 showSuccessMessage('Welcome to the admin dashboard!');
 
                  // Smooth page transition to index.html
@@ -336,7 +336,7 @@ function handleLogin(event) {
         transition.style.opacity = 1;
 
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'index2.html';
         }, 600); // wait for fade-out effect
             } else {
                 alert('Invalid admin credentials. Please try again.');
