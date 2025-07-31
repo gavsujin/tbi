@@ -1095,6 +1095,16 @@ footer p {
     .calendar-day {
         padding: 0.5rem;
     }
+        .enhanced-payment-container {
+        padding: 1rem;
+    }
+    
+    .payment-amount-display h3 {
+        font-size: 1.5rem;
+    }
+     .payment-methods-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1656,3 +1666,278 @@ input.invalid {
         opacity: 0.8;
     }
 }
+
+/* Enhanced Payment System Styles */
+.enhanced-payment-container {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+.payment-info-enhanced {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.payment-info-enhanced h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.payment-info-enhanced p {
+    opacity: 0.9;
+}
+
+.payment-method-selection h4 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.payment-method-card {
+    background: white;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.payment-method-card:hover {
+    border-color: #667eea;
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
+}
+
+.payment-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.payment-form-section {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.form-header h4 {
+    color: #333;
+    font-size: 1.2rem;
+}
+/* Enhanced E-Wallet Styles */
+.ewallet-options-enhanced {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ewallet-card {
+    background: white;
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.ewallet-card:hover {
+    border-color: #667eea;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.ewallet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.ewallet-card:hover::before {
+    left: 100%;
+}
+
+.ewallet-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ewallet-icon-enhanced {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.ewallet-icon-enhanced.gcash {
+    background: linear-gradient(135deg, #007dfe, #0056b3);
+    box-shadow: 0 4px 15px rgba(0, 125, 254, 0.3);
+}
+
+.ewallet-icon-enhanced.maya {
+    background: linear-gradient(135deg, #00d4aa, #00a085);
+    box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+}
+
+.ewallet-icon-enhanced.paypal {
+    background: linear-gradient(135deg, #0070ba, #003087);
+    box-shadow: 0 4px 15px rgba(0, 112, 186, 0.3);
+}
+
+.ewallet-card:hover .ewallet-icon-enhanced {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ewallet-info h5 {
+    margin: 0 0 0.25rem 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.ewallet-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* QR Code Payment Styles */
+.qr-payment-container {
+    text-align: center;
+}
+
+.qr-code-wrapper {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.qr-code-container {
+    width: 280px;
+    height: 280px;
+    margin: 0 auto 1.5rem;
+    border: 3px solid #e1e5e9;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.qr-code-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #667eea, #00d4aa, #667eea);
+    border-radius: inherit;
+    z-index: -1;
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    0% { opacity: 0.5; }
+    100% { opacity: 0.8; }
+}
+
+.qr-code-image {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.qr-error {
+    text-align: center;
+    color: #ef4444;
+    padding: 2rem;
+}
+
+.qr-error i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.qr-error p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.qr-error small {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.payment-amount-display {
+    margin-bottom: 1rem;
+}
+
+.payment-amount-display h3 {
+    color: #667eea;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.payment-instructions {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto;
+}
+

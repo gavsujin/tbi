@@ -339,26 +339,59 @@ function resetFacilityModal() {
         </div>
     `;
 }
+// Modal functions
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetModalState(modalId);
+}
+
+function resetModalState(modalId) {
+    // Reset payment forms and states
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        // Reset form displays
+        const forms = modal.querySelectorAll('[id$="Form"]');
+        forms.forEach(form => form.style.display = 'block');
+        
+        const payments = modal.querySelectorAll('[id$="Payment"]');
+        payments.forEach(payment => payment.style.display = 'none');
+        
+        // Reset payment method selection
+        resetPaymentMethodSelection();
+        
+        // Clear form inputs
+        const inputs = modal.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.value = '';
+            input.classList.remove('valid', 'invalid');
+        });
+        
+        // Clear validation messages
+        const validationMessages = modal.querySelectorAll('.validation-message');
+        validationMessages.forEach(msg => {
+            msg.textContent = '';
+            msg.className = 'validation-message';
+        });
+    }
+}
 
 // Service modal functions
 function openIncubationModal() {
-    const modal = document.getElementById('incubationModal');
-    modal.style.display = 'block';
-    currentModal = modal;
+    currentService = 'incubation';
+    currentAmount = 2500;
+    openModal('incubationModal');
 }
 
 function openRetainerModal() {
-    const modal = document.getElementById('retainerModal');
-    modal.style.display = 'block';
-    currentModal = modal;
-    
-    // Initialize payment form after modal opens
-    setTimeout(() => {
-        if (document.getElementById('cardNumber')) {
-            initializeCardValidation();
-            resetPaymentForm();
-        }
-    }, 100);
+    currentService = 'retainer';
+    currentAmount = 150;
+    openModal('retainerModal');
 }
 
 function openTrainingModal() {
@@ -385,6 +418,8 @@ function openNetworkingModal() {
     currentModal = modal;
     initCalendar();
 }
+
+
 
 // Form submission functions
 function submitIncubationForm(event) {
@@ -1908,6 +1943,707 @@ document.addEventListener('keypress', function(e) {
         }
     }
 });
+
+
+
+// Modal functions
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+    document.body.style.overflow = 'auto';
+    resetModalState(modalId);
+}
+
+function resetModalState(modalId) {
+    // Reset payment forms and states
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        // Reset form displays
+        const forms = modal.querySelectorAll('[id$="Form"]');
+        forms.forEach(form => form.style.display = 'block');
+        
+        const payments = modal.querySelectorAll('[id$="Payment"]');
+        payments.forEach(payment => payment.style.display = 'none');
+        
+        // Reset payment method selection
+        resetPaymentMethodSelection();
+        
+        // Clear form inputs
+        const inputs = modal.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.value = '';
+            input.classList.remove('valid', 'invalid');
+        });
+        
+        // Clear validation messages
+        const validationMessages = modal.querySelectorAll('.validation-message');
+        validationMessages.forEach(msg => {
+            msg.textContent = '';
+            msg.className = 'validation-message';
+        });
+    }
+}
+
+
+
+// Service selection functions
+
+
+function showServicePayment(serviceType, amount) {
+    // Close current modal
+    closeModal(currentService + 'Modal');
+    
+    // Create and show payment modal
+    showPaymentModal(serviceType, amount);
+}
+
+function showPaymentModal(serviceType, amount) {
+    const modalHtml = `
+        <div id="servicePaymentModal" class="modal" style="display: block;">
+            <div class="modal-content large-modal">
+                <span class="close" onclick="closeModal('servicePaymentModal')">&times;</span>
+                <h2>Payment for ${serviceType.charAt(0).toUpperCase() + serviceType.slice(1)}</h2>
+                <div class="payment-info-enhanced">
+                    <h3>Amount: $${amount}</h3>
+                    <p>Complete your payment to secure your ${serviceType} service.</p>
+                </div>
+                
+                <div class="enhanced-payment-container">
+                    <div class="payment-method-selection" id="servicePaymentMethodSelection">
+                        <h4>Choose Payment Method</h4>
+                        <div class="payment-methods-grid">
+                            <button class="payment-method-card" onclick="selectServicePaymentMethod('card')">
+                                <div class="payment-icon-wrapper">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <span>Card Payment</span>
+                            </button>
+                            <button class="payment-method-card" onclick="selectServicePaymentMethod('ewallet')">
+                                <div class="payment-icon-wrapper">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>E-Wallet</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Card and e-wallet forms would be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove existing service payment modal if it exists
+    const existingModal = document.getElementById('servicePaymentModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+    
+    // Add new modal to body
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.body.style.overflow = 'hidden';
+}
+
+function selectServicePaymentMethod(method) {
+    selectedPaymentMethod = method;
+    if (method === 'card') {
+        showServiceCardForm();
+    } else {
+        showServiceEWalletForm();
+    }
+}
+
+function showServiceCardForm() {
+    const container = document.querySelector('#servicePaymentModal .enhanced-payment-container');
+    container.innerHTML = `
+        <div class="payment-form-section">
+            <div class="form-header">
+                <button class="back-btn" onclick="goBackToServicePaymentSelection()">← Back</button>
+                <h4>Card Payment Details</h4>
+            </div>
+            
+            <form onsubmit="processServiceCardPayment(event)">
+                <div class="card-form-container">
+                    <div class="form-group">
+                        <label>Card Number *</label>
+                        <input type="text" id="serviceCardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <div class="validation-message" id="serviceCardValidation"></div>
+                        <div class="card-brands">
+                            <div class="brand-icon" data-brand="visa">VISA</div>
+                            <div class="brand-icon" data-brand="mastercard">MASTER</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Expiry Date *</label>
+                            <input type="text" id="serviceExpiryDate" class="card-input" placeholder="MM/YY" maxlength="5">
+                            <div class="validation-message" id="serviceExpiryValidation"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV *</label>
+                            <input type="text" id="serviceCvv" class="card-input" placeholder="123" maxlength="4">
+                            <div class="validation-message" id="serviceCvvValidation"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cardholder Name *</label>
+                        <input type="text" id="serviceCardholderName" class="card-input" placeholder="Full name on card">
+                        <div class="validation-message" id="serviceNameValidation"></div>
+                    </div>
+
+                    <button type="submit" class="enhanced-pay-button">
+                        <span>Pay $${currentAmount}.00</span>
+                        <div class="loading-spinner" style="display: none;"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    `;
+    
+    // Add event listeners for validation
+    setupCardValidation('service');
+}
+
+function showServiceEWalletForm() {
+    const container = document.querySelector('#servicePaymentModal .enhanced-payment-container');
+    container.innerHTML = `
+        <div class="payment-form-section">
+            <div class="form-header">
+                <button class="back-btn" onclick="goBackToServicePaymentSelection()">← Back</button>
+                <h4>Choose E-Wallet Provider</h4>
+            </div>
+            
+            <div class="ewallet-options-enhanced">
+                <div class="ewallet-card" onclick="selectServiceEWallet('gcash')">
+                    <div class="ewallet-content">
+                        <div class="ewallet-icon-enhanced gcash">G</div>
+                        <div class="ewallet-info">
+                            <h5>GCash</h5>
+                            <p>Philippines Digital Wallet</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="ewallet-card" onclick="selectServiceEWallet('maya')">
+                    <div class="ewallet-content">
+                        <div class="ewallet-icon-enhanced maya">M</div>
+                        <div class="ewallet-info">
+                            <h5>Maya</h5>
+                            <p>Digital Payment Solution</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="ewallet-card" onclick="selectServiceEWallet('paypal')">
+                    <div class="ewallet-content">
+                        <div class="ewallet-icon-enhanced paypal">P</div>
+                        <div class="ewallet-info">
+                            <h5>PayPal</h5>
+                            <p>Global Payment Platform</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function goBackToServicePaymentSelection() {
+    const container = document.querySelector('#servicePaymentModal .enhanced-payment-container');
+    container.innerHTML = `
+        <div class="payment-method-selection">
+            <h4>Choose Payment Method</h4>
+            <div class="payment-methods-grid">
+                <button class="payment-method-card" onclick="selectServicePaymentMethod('card')">
+                    <div class="payment-icon-wrapper">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <span>Card Payment</span>
+                </button>
+                <button class="payment-method-card" onclick="selectServicePaymentMethod('ewallet')">
+                    <div class="payment-icon-wrapper">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <span>E-Wallet</span>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function selectServiceEWallet(wallet) {
+    selectedEWallet = wallet;
+    showServiceQRPayment(wallet);
+}
+
+function showServiceQRPayment(wallet) {
+    const container = document.querySelector('#servicePaymentModal .enhanced-payment-container');
+    const qrImage = getQRImage(wallet);
+    
+    container.innerHTML = `
+        <div class="payment-form-section">
+            <div class="form-header">
+                <button class="back-btn" onclick="showServiceEWalletForm()">← Back</button>
+                <h4>Pay with ${wallet.charAt(0).toUpperCase() + wallet.slice(1)}</h4>
+            </div>
+            
+            <div class="qr-payment-container">
+                <div class="qr-code-wrapper">
+                    <div class="qr-code-container">
+                        <img src="${qrImage}" alt="QR Code" class="qr-code-image">
+                    </div>
+                    <div class="payment-amount-display">
+                        <h3>Amount: $${currentAmount}.00</h3>
+                    </div>
+                    <div class="payment-instructions">
+                        Scan the QR code with your ${wallet} app to complete payment
+                    </div>
+                </div>
+                
+                <button class="enhanced-pay-button" onclick="completeServiceEWalletPayment()">
+                    <span>Complete Payment</span>
+                    <div class="loading-spinner" style="display: none;"></div>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function processServiceCardPayment(event) {
+    event.preventDefault();
+    
+    const button = event.target.querySelector('.enhanced-pay-button');
+    const spinner = button.querySelector('.loading-spinner');
+    const buttonText = button.querySelector('span');
+    
+    // Show loading state
+    button.disabled = true;
+    spinner.style.display = 'inline-block';
+    buttonText.textContent = 'Processing...';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        const success = Math.random() > 0.1; // 90% success rate
+        
+        if (success) {
+            closeModal('servicePaymentModal');
+            showPaymentResult(true, `Payment of $${currentAmount} completed successfully!`);
+        } else {
+            showPaymentResult(false, 'Payment failed. Please try again.');
+        }
+        
+        // Reset button state
+        button.disabled = false;
+        spinner.style.display = 'none';
+        buttonText.textContent = `Pay $${currentAmount}.00`;
+    }, 3000);
+}
+
+function completeServiceEWalletPayment() {
+    const button = event.target;
+    const spinner = button.querySelector('.loading-spinner');
+    const buttonText = button.querySelector('span');
+    
+    // Show loading state
+    button.disabled = true;
+    spinner.style.display = 'inline-block';
+    buttonText.textContent = 'Processing...';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        const success = Math.random() > 0.1; // 90% success rate
+        
+        if (success) {
+            closeModal('servicePaymentModal');
+            showPaymentResult(true, `Payment of $${currentAmount} completed successfully via ${selectedEWallet}!`);
+        } else {
+            showPaymentResult(false, 'Payment failed. Please try again.');
+        }
+        
+        // Reset button state
+        button.disabled = false;
+        spinner.style.display = 'none';
+        buttonText.textContent = 'Complete Payment';
+    }, 3000);
+}
+
+// Form submission functions
+function submitIncubationForm(event) {
+    event.preventDefault();
+    document.getElementById('incubationForm').style.display = 'none';
+    document.getElementById('incubationPayment').style.display = 'block';
+}
+
+function submitRetainerForm(event) {
+    event.preventDefault();
+    // Similar to incubation but with $150 amount
+    currentAmount = 150;
+    showServicePayment('retainer', 150);
+}
+
+function goBackToIncubationForm() {
+    document.getElementById('incubationForm').style.display = 'block';
+    document.getElementById('incubationPayment').style.display = 'none';
+    resetPaymentMethodSelection();
+}
+
+// Payment method selection
+function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+    
+    // Hide payment method selection
+    document.getElementById('paymentMethodSelection').style.display = 'none';
+    
+    if (method === 'card') {
+        document.getElementById('cardPaymentForm').style.display = 'block';
+        setupCardValidation('incubation');
+    } else {
+        document.getElementById('ewalletSelection').style.display = 'block';
+    }
+}
+
+function goBackToPaymentSelection() {
+    document.getElementById('paymentMethodSelection').style.display = 'block';
+    document.getElementById('cardPaymentForm').style.display = 'none';
+    document.getElementById('ewalletSelection').style.display = 'none';
+    document.getElementById('qrPaymentSection').style.display = 'none';
+}
+
+function goBackToEWalletSelection() {
+    document.getElementById('ewalletSelection').style.display = 'block';
+    document.getElementById('qrPaymentSection').style.display = 'none';
+}
+
+function resetPaymentMethodSelection() {
+    document.getElementById('paymentMethodSelection').style.display = 'block';
+    document.getElementById('cardPaymentForm').style.display = 'none';
+    document.getElementById('ewalletSelection').style.display = 'none';
+    document.getElementById('qrPaymentSection').style.display = 'none';
+}
+
+// E-wallet selection
+function selectEWallet(wallet) {
+    selectedEWallet = wallet;
+    
+    // Hide e-wallet selection
+    document.getElementById('ewalletSelection').style.display = 'none';
+    
+    // Show QR payment section
+    document.getElementById('qrPaymentSection').style.display = 'block';
+    document.getElementById('qrPaymentTitle').textContent = `Pay with ${wallet.charAt(0).toUpperCase() + wallet.slice(1)}`;
+    
+    // Load QR code
+    loadQRCode(wallet);
+}
+
+function loadQRCode(wallet) {
+    const qrImage = document.getElementById('qrCodeImage');
+    const qrContainer = document.getElementById('qrCodeContainer');
+    const qrError = document.getElementById('qrCodeError');
+    
+    // Simulate QR code loading
+    const qrCodes = {
+        'gcash': 'gcash-qr.png',
+        'maya': 'maya-qr.png',
+        'paypal': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3MGJhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5QYXlQYWwgUVI8L3RleHQ+PC9zdmc+'
+    };
+    
+    if (qrCodes[wallet]) {
+        qrImage.src = qrCodes[wallet];
+        qrImage.style.display = 'block';
+        qrError.style.display = 'none';
+    } else {
+        qrImage.style.display = 'none';
+        qrError.style.display = 'block';
+    }
+}
+
+function getQRImage(wallet) {
+    const qrCodes = {
+        'gcash': 'gcash-qr.png',
+        'maya': 'maya-qr.png',
+        'paypal': 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMDA3MGJhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5QYXlQYWwgUVI8L3RleHQ+PC9zdmc+'
+    };
+    
+    return qrCodes[wallet] || qrCodes['paypal'];
+}
+
+// Card validation
+function setupCardValidation(prefix) {
+    const cardNumber = document.getElementById(prefix + 'CardNumber');
+    const expiryDate = document.getElementById(prefix + 'ExpiryDate');
+    const cvv = document.getElementById(prefix + 'Cvv');
+    const cardholderName = document.getElementById(prefix + 'CardholderName');
+    
+    if (cardNumber) {
+        cardNumber.addEventListener('input', function() {
+            validateCardNumber(this, prefix + 'CardValidation');
+        });
+    }
+    
+    if (expiryDate) {
+        expiryDate.addEventListener('input', function() {
+            validateExpiryDate(this, prefix + 'ExpiryValidation');
+        });
+    }
+    
+    if (cvv) {
+        cvv.addEventListener('input', function() {
+            validateCVV(this, prefix + 'CvvValidation');
+        });
+    }
+    
+    if (cardholderName) {
+        cardholderName.addEventListener('input', function() {
+            validateCardholderName(this, prefix + 'NameValidation');
+        });
+    }
+}
+
+function validateCardNumber(input, validationId) {
+    let value = input.value.replace(/\s/g, '');
+    let formattedValue = value.replace(/(.{4})/g, '$1 ');
+    input.value = formattedValue.trim();
+    
+    const validation = document.getElementById(validationId);
+    
+    if (value.length === 0) {
+        validation.textContent = '';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+        return;
+    }
+    
+    if (isValidCardNumber(value)) {
+        validation.textContent = '✓ Valid card number';
+        validation.className = 'validation-message valid';
+        input.classList.add('valid');
+        input.classList.remove('invalid');
+    } else if (value.length >= 13) {
+        validation.textContent = '✗ Invalid card number';
+        validation.className = 'validation-message invalid';
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+    } else {
+        validation.textContent = 'Enter card number';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+    }
+}
+
+function validateExpiryDate(input, validationId) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    input.value = value;
+    
+    const validation = document.getElementById(validationId);
+    
+    if (value.length === 0) {
+        validation.textContent = '';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+        return;
+    }
+    
+    if (isValidExpiryDate(value)) {
+        validation.textContent = '✓ Valid expiry date';
+        validation.className = 'validation-message valid';
+        input.classList.add('valid');
+        input.classList.remove('invalid');
+    } else if (value.length === 5) {
+        validation.textContent = '✗ Invalid or expired date';
+        validation.className = 'validation-message invalid';
+        input.classList.add('invalid');
+        input.classList.remove('valid');
+    } else {
+        validation.textContent = 'MM/YY format';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+    }
+}
+
+function validateCVV(input, validationId) {
+    let value = input.value.replace(/\D/g, '');
+    input.value = value;
+    
+    const validation = document.getElementById(validationId);
+    
+    if (value.length === 0) {
+        validation.textContent = '';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+        return;
+    }
+    
+    if (value.length >= 3 && value.length <= 4) {
+        validation.textContent = '✓ Valid CVV';
+        validation.className = 'validation-message valid';
+        input.classList.add('valid');
+        input.classList.remove('invalid');
+    } else {
+        validation.textContent = '3-4 digits required';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+    }
+}
+
+function validateCardholderName(input, validationId) {
+    const value = input.value.trim();
+    const validation = document.getElementById(validationId);
+    
+    if (value.length === 0) {
+        validation.textContent = '';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+        return;
+    }
+    
+    if (value.length >= 2 && /^[a-zA-Z\s]+$/.test(value)) {
+        validation.textContent = '✓ Valid name';
+        validation.className = 'validation-message valid';
+        input.classList.add('valid');
+        input.classList.remove('invalid');
+    } else {
+        validation.textContent = 'Enter full name as on card';
+        validation.className = 'validation-message';
+        input.classList.remove('valid', 'invalid');
+    }
+}
+
+// Luhn algorithm for card validation
+function isValidCardNumber(cardNumber) {
+    if (!/^\d{13,19}$/.test(cardNumber)) return false;
+    
+    let sum = 0;
+    let isEven = false;
+    
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+        let digit = parseInt(cardNumber.charAt(i));
+        
+        if (isEven) {
+            digit *= 2;
+            if (digit > 9) digit -= 9;
+        }
+        
+        sum += digit;
+        isEven = !isEven;
+    }
+    
+    return sum % 10 === 0;
+}
+
+function isValidExpiryDate(expiry) {
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) return false;
+    
+    const [month, year] = expiry.split('/');
+    const currentDate = new Date();
+    const expiryDate = new Date(2000 + parseInt(year), parseInt(month) - 1);
+    
+    return expiryDate > currentDate && parseInt(month) >= 1 && parseInt(month) <= 12;
+}
+
+// Payment processing
+function processCardPayment(event, service, amount) {
+    event.preventDefault();
+    
+    const button = event.target.querySelector('.enhanced-pay-button');
+    const spinner = button.querySelector('.loading-spinner');
+    const buttonText = button.querySelector('span');
+    
+    // Show loading state
+    button.disabled = true;
+    spinner.style.display = 'inline-block';
+    buttonText.textContent = 'Processing...';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        const success = Math.random() > 0.1; // 90% success rate
+        
+        if (success) {
+            closeModal(service + 'Modal');
+            showPaymentResult(true, `Payment of $${amount} completed successfully!`);
+        } else {
+            showPaymentResult(false, 'Payment failed. Please try again.');
+        }
+        
+        // Reset button state
+        button.disabled = false;
+        spinner.style.display = 'none';
+        buttonText.textContent = `Pay $${amount}.00`;
+    }, 3000);
+}
+
+function completeEWalletPayment(service, amount) {
+    const button = document.getElementById('completeEWalletPayment');
+    const spinner = button.querySelector('.loading-spinner');
+    const buttonText = button.querySelector('span');
+    
+    // Show loading state
+    button.disabled = true;
+    spinner.style.display = 'inline-block';
+    buttonText.textContent = 'Processing...';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        const success = Math.random() > 0.1; // 90% success rate
+        
+        if (success) {
+            closeModal(service + 'Modal');
+            showPaymentResult(true, `Payment of $${amount} completed successfully via ${selectedEWallet}!`);
+        } else {
+            showPaymentResult(false, 'Payment failed. Please try again.');
+        }
+        
+        // Reset button state
+        button.disabled = false;
+        spinner.style.display = 'none';
+        buttonText.textContent = 'Complete Payment';
+    }, 3000);
+}
+
+// Payment result modal
+function showPaymentResult(success, message) {
+    const modal = document.getElementById('paymentResultModal');
+    const successContent = document.getElementById('successContent');
+    const errorContent = document.getElementById('errorContent');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (success) {
+        successContent.style.display = 'block';
+        errorContent.style.display = 'none';
+        successMessage.textContent = message;
+    } else {
+        successContent.style.display = 'none';
+        errorContent.style.display = 'block';
+        errorMessage.textContent = message;
+    }
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closePaymentResultModal() {
+    document.getElementById('paymentResultModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+    
+    // Remove any service payment modal
+    const serviceModal = document.getElementById('servicePaymentModal');
+    if (serviceModal) {
+        serviceModal.remove();
+    }
+}
 
 // Expose functions to global scope for onclick handlers
 window.openAuthModal = openAuthModal;
